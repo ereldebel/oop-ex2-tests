@@ -7,9 +7,12 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Erel Debel.
  */
-class BoardTest {
+public class BoardTest {
 	private Board board;
 
+	/**
+	 * Checks that a board is created with all marks Blank.
+	 */
 	@org.junit.jupiter.api.Test
 	void checkInitialization() {
 		board = new Board();
@@ -20,58 +23,9 @@ class BoardTest {
 		}
 	}
 
-	@org.junit.jupiter.api.Test
-	void checkGetMarkOutOfRange() {
-		board = new Board();
-		assertEquals(Mark.BLANK, board.getMark(0, 1));
-		assertEquals(Mark.BLANK, board.getMark(-1, 1));
-		assertEquals(Mark.BLANK, board.getMark(1, 0));
-		assertEquals(Mark.BLANK, board.getMark(1, -1));
-		assertEquals(Mark.BLANK, board.getMark(0, 0));
-		assertEquals(Mark.BLANK, board.getMark(Board.SIZE, 1));
-		assertEquals(Mark.BLANK, board.getMark(Board.SIZE + 1, 1));
-		assertEquals(Mark.BLANK, board.getMark(1, Board.SIZE));
-		assertEquals(Mark.BLANK, board.getMark(1, Board.SIZE + 1));
-		assertEquals(Mark.BLANK, board.getMark(Board.SIZE, Board.SIZE));
-		assertEquals(Mark.BLANK, board.getMark(0, Board.SIZE));
-		assertEquals(Mark.BLANK, board.getMark(Board.SIZE, 0));
-	}
-
-	@org.junit.jupiter.api.Test
-	void checkMarksCanNotChange() {
-		board = new Board();
-		assertTrue(board.putMark(Mark.X, 1, 0));
-		assertFalse(board.putMark(Mark.X, 1, 0));
-		assertFalse(board.putMark(Mark.O, 1, 0));
-		assertEquals(Mark.X, board.getMark(1,0));
-		assertTrue(board.putMark(Mark.O, 0, 1));
-		assertFalse(board.putMark(Mark.O, 0, 1));
-		assertFalse(board.putMark(Mark.X, 0, 1));
-		assertEquals(Mark.O, board.getMark(0, 1));
-	}
-
-	@org.junit.jupiter.api.Test
-	void checkPutMarkOutOfRange() {
-		checkPutMarkOutOfRangeWithMark(Mark.X);
-		checkPutMarkOutOfRangeWithMark(Mark.O);
-	}
-
-	private void checkPutMarkOutOfRangeWithMark(Mark mark) {
-		board = new Board();
-		assertFalse(board.putMark(mark, -1, 0));
-		assertFalse(board.putMark(mark, -2, 0));
-		assertFalse(board.putMark(mark, 0, -1));
-		assertFalse(board.putMark(mark, 0, -2));
-		assertFalse(board.putMark(mark, -1,-1));
-		assertFalse(board.putMark(mark, Board.SIZE, 0));
-		assertFalse(board.putMark(mark, Board.SIZE + 1, 0));
-		assertFalse(board.putMark(mark, 0, Board.SIZE));
-		assertFalse(board.putMark(mark, 0, Board.SIZE + 1));
-		assertFalse(board.putMark(mark, Board.SIZE, Board.SIZE));
-		assertFalse(board.putMark(mark, -1, Board.SIZE));
-		assertFalse(board.putMark(mark, Board.SIZE, -1));
-	}
-
+	/**
+	 * Checks the PutMark and GetMark work using the same indices.
+	 */
 	@org.junit.jupiter.api.Test
 	void checkPutMarkAndGetMarkSynchronization() {
 		board = new Board();
@@ -88,17 +42,80 @@ class BoardTest {
 		}
 	}
 
+	/**
+	 * Checks that you can't override a placed mark.
+	 */
 	@org.junit.jupiter.api.Test
-	void checkStatusInitializationToInProgress() {
+	void checkMarksCanNotChange() {
+		board = new Board();
+		assertTrue(board.putMark(Mark.X, 1, 0));
+		assertFalse(board.putMark(Mark.X, 1, 0));
+		assertFalse(board.putMark(Mark.O, 1, 0));
+		assertEquals(Mark.X, board.getMark(1, 0));
+		assertTrue(board.putMark(Mark.O, 0, 1));
+		assertFalse(board.putMark(Mark.O, 0, 1));
+		assertFalse(board.putMark(Mark.X, 0, 1));
+		assertEquals(Mark.O, board.getMark(0, 1));
+	}
+
+	/**
+	 * Checks that putMark returns false for coordinates out of range and does not mark them.
+	 */
+	@org.junit.jupiter.api.Test
+	void checkPutAndGetMarkOutOfRange() {
+		checkPutMarkOutOfRangeWithMark(Mark.X);
+		checkPutMarkOutOfRangeWithMark(Mark.O);
+	}
+
+	private void checkPutMarkOutOfRangeWithMark(Mark mark) {
+		board = new Board();
+		assertFalse(board.putMark(mark, -1, 0));
+		assertFalse(board.putMark(mark, -2, 0));
+		assertFalse(board.putMark(mark, 0, -1));
+		assertFalse(board.putMark(mark, 0, -2));
+		assertFalse(board.putMark(mark, -1, -1));
+		assertFalse(board.putMark(mark, Board.SIZE, 0));
+		assertFalse(board.putMark(mark, Board.SIZE + 1, 0));
+		assertFalse(board.putMark(mark, 0, Board.SIZE));
+		assertFalse(board.putMark(mark, 0, Board.SIZE + 1));
+		assertFalse(board.putMark(mark, Board.SIZE, Board.SIZE));
+		assertFalse(board.putMark(mark, -1, Board.SIZE));
+		assertFalse(board.putMark(mark, Board.SIZE, -1));
+
+		assertEquals(Mark.BLANK, board.getMark(-1, 0));
+		assertEquals(Mark.BLANK, board.getMark(-2, 0));
+		assertEquals(Mark.BLANK, board.getMark(0, -1));
+		assertEquals(Mark.BLANK, board.getMark(0, -2));
+		assertEquals(Mark.BLANK, board.getMark(-1, -1));
+		assertEquals(Mark.BLANK, board.getMark(Board.SIZE, 0));
+		assertEquals(Mark.BLANK, board.getMark(Board.SIZE + 1, 0));
+		assertEquals(Mark.BLANK, board.getMark(0, Board.SIZE));
+		assertEquals(Mark.BLANK, board.getMark(0, Board.SIZE + 1));
+		assertEquals(Mark.BLANK, board.getMark(Board.SIZE, Board.SIZE));
+		assertEquals(Mark.BLANK, board.getMark(-1, Board.SIZE));
+		assertEquals(Mark.BLANK, board.getMark(Board.SIZE, -1));
+	}
+
+	/**
+	 * Checks that gameEnded does not initialize to True.
+	 */
+	@org.junit.jupiter.api.Test
+	void checkGameIsNotFinishedAtStart() {
 		board = new Board();
 		assertFalse(board.gameEnded());
 	}
 
+	/**
+	 * Checks that X can win.
+	 */
 	@org.junit.jupiter.api.Test
 	void checkXWin() {
 		checkWin(Mark.X);
 	}
 
+	/**
+	 * Checks that O can win.
+	 */
 	@org.junit.jupiter.api.Test
 	void checkOWin() {
 		checkWin(Mark.O);
@@ -141,6 +158,9 @@ class BoardTest {
 		assertEquals(mark, board.getWinner());
 	}
 
+	/**
+	 * Checks that a draw happens when the board is full with no winning streaks.
+	 */
 	@org.junit.jupiter.api.Test
 	void CheckDraw() {
 		board = new Board();
