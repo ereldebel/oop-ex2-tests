@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -13,7 +14,7 @@ public class BoardTest {
 	/**
 	 * Checks that a board is created with all marks Blank.
 	 */
-	@org.junit.jupiter.api.Test
+	@Test
 	void checkInitialization() {
 		board = new Board();
 		for (int row = 0; row < Board.SIZE; row++) {
@@ -26,7 +27,7 @@ public class BoardTest {
 	/**
 	 * Checks the PutMark and GetMark work using the same indices.
 	 */
-	@org.junit.jupiter.api.Test
+	@Test
 	void checkPutMarkAndGetMarkSynchronization() {
 		board = new Board();
 		Mark[] marks = {Mark.X, Mark.O};
@@ -45,7 +46,7 @@ public class BoardTest {
 	/**
 	 * Checks that you can't override a placed mark.
 	 */
-	@org.junit.jupiter.api.Test
+	@Test
 	void checkMarksCanNotChange() {
 		board = new Board();
 		assertTrue(board.putMark(Mark.X, 1, 0));
@@ -61,7 +62,7 @@ public class BoardTest {
 	/**
 	 * Checks that putMark returns false for coordinates out of range and does not mark them.
 	 */
-	@org.junit.jupiter.api.Test
+	@Test
 	void checkPutAndGetMarkOutOfRange() {
 		checkPutMarkOutOfRangeWithMark(Mark.X);
 		checkPutMarkOutOfRangeWithMark(Mark.O);
@@ -99,7 +100,7 @@ public class BoardTest {
 	/**
 	 * Checks that gameEnded does not initialize to True.
 	 */
-	@org.junit.jupiter.api.Test
+	@Test
 	void checkGameIsNotFinishedAtStart() {
 		board = new Board();
 		assertFalse(board.gameEnded());
@@ -108,7 +109,7 @@ public class BoardTest {
 	/**
 	 * Checks that X can win.
 	 */
-	@org.junit.jupiter.api.Test
+	@Test
 	void checkXWin() {
 		checkWin(Mark.X);
 	}
@@ -116,7 +117,7 @@ public class BoardTest {
 	/**
 	 * Checks that O can win.
 	 */
-	@org.junit.jupiter.api.Test
+	@Test
 	void checkOWin() {
 		checkWin(Mark.O);
 	}
@@ -161,7 +162,7 @@ public class BoardTest {
 	/**
 	 * Checks that a draw happens when the board is full with no winning streaks.
 	 */
-	@org.junit.jupiter.api.Test
+	@Test
 	void CheckDraw() {
 		board = new Board();
 		if (Board.WIN_STREAK < 3) {

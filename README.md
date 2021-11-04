@@ -14,7 +14,8 @@ The tests can be configured and run by:
 5. On the first line' hover mouse over the red text and press _Alt+Enter_:![img_3.png](screenshots/img_3.png)
 6. Then choose _JUnit 5_:
   ![img_4.png](screenshots/img_4.png)
-7. Click the Green arrows next to the class name or press _Ctrl+Shift+F10_ to run the test.
+7. Right-click _testSrc_ directory or press _Ctrl+Shift+F10_ to run all tests:
+![img_5.png](screenshots/img_5.png)
 
 
 Good luck!\
