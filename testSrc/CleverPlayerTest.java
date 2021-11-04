@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.Test;
 
+import java.io.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 /**
  * <B>Tests for the CleverPlayer Class,</B>
@@ -55,13 +57,20 @@ class CleverPlayerTest {
 	 * This test relies on probability, so you might fail it once in a few tries even if your code is correct.
 	 */
 	private void checkWinDistribution() {
+		try {
+			printToFile();
+		} catch (IOException e) {
+			fail("unable to print to file.");
+			return;
+		}
 		int distributionTarget = currentDistributionTarget();
 		Tournament tournament = new Tournament(
 				GAMES * 100,
 				new VoidRenderer(),
 				new Player[]{ new CleverPlayer(), new WhateverPlayer()}
 		);
-		var results = tournament.playTournament();
+		tournament.playTournament();
+		var results = getResults();
 		assert (results[0] > GAMES * distributionTarget - EPSILON);
 	}
 
@@ -81,5 +90,39 @@ class CleverPlayerTest {
 		}
 		fail("current SIZE/WIN_STREAK ratio not expected.");
 		return 0;
+	}
+
+	private int[] getResults() {
+		var results = new int[3];
+		String lastLine = "";
+		String currentLine;
+		try (BufferedReader br = new BufferedReader(new FileReader("out.txt"))) {
+			while ((currentLine = br.readLine()) != null && !currentLine.equals("")) {
+				lastLine = currentLine;
+			}
+		} catch (IOException e) {
+			fail("unable to read out file.");
+			return results;
+		}
+		lastLine = lastLine.replaceAll("[^0-9]", " ");
+		var resultsAsStrings = lastLine.split("\\s+");
+		if (resultsAsStrings.length > 4) {
+			results[0] = Integer.parseInt(resultsAsStrings[resultsAsStrings.length - 4]);
+			results[1] = Integer.parseInt(resultsAsStrings[resultsAsStrings.length - 2]);
+			results[2] = Integer.parseInt(resultsAsStrings[resultsAsStrings.length - 1]);
+		} else if (resultsAsStrings.length > 2){
+			for (int i = resultsAsStrings.length - 3; i < resultsAsStrings.length; ++i) {
+				results[i] = Integer.parseInt(resultsAsStrings[i]);
+			}
+		} else {
+			fail("Tournament.playTournament didn't print enough numbers.");
+		}
+		return results;
+	}
+
+	private void printToFile() throws FileNotFoundException {
+		var outFile = new File("out.txt");
+		PrintStream out = new PrintStream("out.txt");
+		System.setOut(out);
 	}
 }
