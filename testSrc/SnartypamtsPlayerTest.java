@@ -48,7 +48,7 @@ class SnartypamtsPlayerTest {
 //		}
 //		Board.WIN_STREAK = initialStreak;
 //		Board.SIZE = initialSize;
-		// TODO uncomment from here
+		// TODO uncomment to here
 	}
 
 	/**
