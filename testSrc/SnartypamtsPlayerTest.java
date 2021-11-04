@@ -16,7 +16,7 @@ class SnartypamtsPlayerTest {
 	/**
 	 * number of games to play times 100.
 	 */
-	public static final int GAMES = 10;
+	public static final int GAMES = 100;
 
 	private File outFile;
 
