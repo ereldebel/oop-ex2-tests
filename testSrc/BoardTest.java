@@ -123,7 +123,7 @@ public class BoardTest {
 	}
 
 	void checkWin(Mark mark) {
-		if ((Board.WIN_STREAK != 3) && (Board.SIZE < 4)) {
+		if ((Board.WIN_STREAK != 3) || (Board.SIZE < 4)) {
 			fail("This test assumes a win streak of 3 and a size of at least 4.");
 			return;
 		}
