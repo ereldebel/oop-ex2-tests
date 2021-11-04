@@ -33,7 +33,9 @@ class SnartypamtsPlayerTest {
 	 */
 	@Test
 	void checkAllWinDistribution() {
-//		int initialSize = Board.SIZE, initialStreak = Board.WIN_STREAK; // TODO uncomment
+		checkWinDistribution();
+		// TODO uncomment from here
+//		int initialSize = Board.SIZE, initialStreak = Board.WIN_STREAK;
 //		for (int streak = 3; streak < 8; ++streak) {
 //			for (int size = 3; size < 8; ++size) {
 //				if (streak > size) {
@@ -41,11 +43,12 @@ class SnartypamtsPlayerTest {
 //				}
 //				Board.WIN_STREAK = streak;
 //				Board.SIZE = size;
-		checkWinDistribution();
+//		checkWinDistribution();
 //			}
 //		}
 //		Board.WIN_STREAK = initialStreak;
-//		Board.SIZE = initialSize; // TODO uncomment
+//		Board.SIZE = initialSize;
+		// TODO uncomment from here
 	}
 
 	/**
@@ -90,7 +93,7 @@ class SnartypamtsPlayerTest {
 			results[0] = Integer.parseInt(resultsAsStrings[resultsAsStrings.length - 4]);
 			results[1] = Integer.parseInt(resultsAsStrings[resultsAsStrings.length - 2]);
 			results[2] = Integer.parseInt(resultsAsStrings[resultsAsStrings.length - 1]);
-		} else if (resultsAsStrings.length > 2){
+		} else if (resultsAsStrings.length > 2) {
 			for (int i = resultsAsStrings.length - 3; i < resultsAsStrings.length; ++i) {
 				results[i] = Integer.parseInt(resultsAsStrings[i]);
 			}

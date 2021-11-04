@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Test;
 import java.io.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * <B>Tests for the CleverPlayer Class,</B>
  * featured in Exercise 2 of the new "Introduction to OOP" course,
@@ -33,20 +34,23 @@ class CleverPlayerTest {
 	 * This test relies on probability, so you might fail it once in a few tries even if your code is correct.
 	 */
 	@Test
-	void checkAllWinDistribution(){
-		int initialSize = Board.SIZE, initialStreak = Board.WIN_STREAK;
-		for (int streak = 3; streak < 8; ++streak) {
-			for (int size = 3; size < 8; ++size) {
-				if (streak > size) {
-					continue;
-				}
-//				Board.WIN_STREAK = streak;  // TODO uncomment
-//				Board.SIZE = size; // TODO uncomment
-				checkWinDistribution();
-			}
-		}
-//		Board.WIN_STREAK = initialStreak; // TODO uncomment
-//		Board.SIZE = initialSize; // TODO uncomment
+	void checkAllWinDistribution() {
+		checkWinDistribution();
+		// TODO uncomment from here
+//		int initialSize = Board.SIZE, initialStreak = Board.WIN_STREAK;
+//		for (int streak = 3; streak < 8; ++streak) {
+//			for (int size = 3; size < 8; ++size) {
+//				if (streak > size) {
+//					continue;
+//				}
+//				Board.WIN_STREAK = streak;
+//				Board.SIZE = size;
+//				checkWinDistribution();
+//			}
+//		}
+//		Board.WIN_STREAK = initialStreak;
+//		Board.SIZE = initialSize;
+		// TODO uncomment to here
 	}
 
 	/**
@@ -67,7 +71,7 @@ class CleverPlayerTest {
 		Tournament tournament = new Tournament(
 				GAMES * 100,
 				new VoidRenderer(),
-				new Player[]{ new CleverPlayer(), new WhateverPlayer()}
+				new Player[]{new CleverPlayer(), new WhateverPlayer()}
 		);
 		tournament.playTournament();
 		var results = getResults();
@@ -110,7 +114,7 @@ class CleverPlayerTest {
 			results[0] = Integer.parseInt(resultsAsStrings[resultsAsStrings.length - 4]);
 			results[1] = Integer.parseInt(resultsAsStrings[resultsAsStrings.length - 2]);
 			results[2] = Integer.parseInt(resultsAsStrings[resultsAsStrings.length - 1]);
-		} else if (resultsAsStrings.length > 2){
+		} else if (resultsAsStrings.length > 2) {
 			for (int i = resultsAsStrings.length - 3; i < resultsAsStrings.length; ++i) {
 				results[i] = Integer.parseInt(resultsAsStrings[i]);
 			}

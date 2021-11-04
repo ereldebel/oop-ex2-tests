@@ -133,13 +133,13 @@ public class BoardTest {
 		// scenario 2: vertical, length 4
 		board = new Board();
 		assertFalse(board.gameEnded(), "End boolean may unwantedly be static.");
-		if (Board.WIN_STREAK == 4){
+		if (Board.WIN_STREAK == 4) {
 			int[] puttingOrder = {3, 1, 0, 4, 2};
 			for (int i = 0; i < 5; i++) {
 				board.putMark(mark, puttingOrder[i], 1);
 			}
 		}
-		if (Board.WIN_STREAK == 3){
+		if (Board.WIN_STREAK == 3) {
 			int[] puttingOrder = {3, 1, 0, 2};
 			for (int i = 0; i < 4; i++) {
 				board.putMark(mark, puttingOrder[i], 1);
