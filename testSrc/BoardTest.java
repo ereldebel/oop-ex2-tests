@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -123,38 +124,38 @@ public class BoardTest {
 	}
 
 	void checkWin(Mark mark) {
-		if ((Board.WIN_STREAK != 3) || (Board.SIZE < 4)) {
-			fail("This test assumes a win streak of 3 and a size of at least 4.");
-			return;
-		}
 		// scenario 1: horizontal
 		board = new Board();
-		for (int i = 0; i < 3; i++) {
-			assertFalse(board.gameEnded());
-			board.putMark(mark, 3, 1 + i);
+		for (int i = 0; i < 4; i++) {
+			board.putMark(mark, 3, i);
 		}
 		assertEquals(mark, board.getWinner());
 		// scenario 2: vertical, length 4
 		board = new Board();
 		assertFalse(board.gameEnded(), "End boolean may unwantedly be static.");
-		int[] puttingOrder = {3, 1, 0, 2};
-		for (int i = 0; i < 4; i++) {
-			assertFalse(board.gameEnded());
-			board.putMark(mark, puttingOrder[i], 1);
+		if (Board.WIN_STREAK == 4){
+			int[] puttingOrder = {3, 1, 0, 4, 2};
+			for (int i = 0; i < 5; i++) {
+				board.putMark(mark, puttingOrder[i], 1);
+			}
+		}
+		if (Board.WIN_STREAK == 3){
+			int[] puttingOrder = {3, 1, 0, 2};
+			for (int i = 0; i < 4; i++) {
+				board.putMark(mark, puttingOrder[i], 1);
+			}
 		}
 		assertEquals(mark, board.getWinner());
 		// scenario 3: first diagonal
 		board = new Board();
-		for (int i = 0; i < 3; i++) {
-			assertFalse(board.gameEnded());
-			board.putMark(mark, 1 + i, i);
+		for (int i = 0; i < 4; i++) {
+			board.putMark(mark, i, i);
 		}
 		assertEquals(mark, board.getWinner());
 		// scenario 4: second diagonal
 		board = new Board();
-		for (int i = 0; i < 3; i++) {
-			assertFalse(board.gameEnded());
-			board.putMark(mark, 3 - i, 1 + i);
+		for (int i = 0; i < 4; i++) {
+			board.putMark(mark, Board.SIZE - 1 - i, i);
 		}
 		assertEquals(mark, board.getWinner());
 	}
