@@ -126,35 +126,36 @@ public class BoardTest {
 	void checkWin(Mark mark) {
 		// scenario 1: horizontal
 		board = new Board();
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < Board.WIN_STREAK; i++) {
 			board.putMark(mark, 2, i);
 		}
 		assertEquals(mark, board.getWinner());
 		// scenario 2: vertical, length 4
 		board = new Board();
 		assertFalse(board.gameEnded(), "End boolean may unwantedly be static.");
-		if (Board.WIN_STREAK == 4) {
+		if (Board.WIN_STREAK < 5) {
 			int[] puttingOrder = {3, 1, 0, 4, 2};
 			for (int i = 0; i < 5; i++) {
 				board.putMark(mark, puttingOrder[i], 1);
 			}
+			assertEquals(mark, board.getWinner());
 		}
-		if (Board.WIN_STREAK == 3) {
+		if (Board.WIN_STREAK < 4) {
 			int[] puttingOrder = {3, 1, 0, 2};
 			for (int i = 0; i < 4; i++) {
 				board.putMark(mark, puttingOrder[i], 1);
 			}
+			assertEquals(mark, board.getWinner());
 		}
-		assertEquals(mark, board.getWinner());
 		// scenario 3: first diagonal
 		board = new Board();
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < Board.WIN_STREAK; i++) {
 			board.putMark(mark, i, i);
 		}
 		assertEquals(mark, board.getWinner());
 		// scenario 4: second diagonal
 		board = new Board();
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < Board.WIN_STREAK; i++) {
 			board.putMark(mark, Board.SIZE - 1 - i, i);
 		}
 		assertEquals(mark, board.getWinner());
