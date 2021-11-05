@@ -127,7 +127,7 @@ public class BoardTest {
 		// scenario 1: horizontal
 		board = new Board();
 		for (int i = 0; i < 4; i++) {
-			board.putMark(mark, 3, i);
+			board.putMark(mark, 2, i);
 		}
 		assertEquals(mark, board.getWinner());
 		// scenario 2: vertical, length 4
