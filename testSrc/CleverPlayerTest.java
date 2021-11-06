@@ -61,8 +61,9 @@ class CleverPlayerTest {
 	 * This test relies on probability, so you might fail it once in a few tries even if your code is correct.
 	 */
 	private void checkWinDistribution() {
+		PrintStream stream;
 		try {
-			printToFile();
+			stream = printToFile();
 		} catch (IOException e) {
 			fail("unable to print to file.");
 			return;
@@ -74,6 +75,7 @@ class CleverPlayerTest {
 				new Player[]{new CleverPlayer(), new WhateverPlayer()}
 		);
 		tournament.playTournament();
+		stream.close();
 		var results = getResults();
 		assert (results[0] > GAMES * distributionTarget - EPSILON);
 	}
@@ -124,9 +126,10 @@ class CleverPlayerTest {
 		return results;
 	}
 
-	private void printToFile() throws FileNotFoundException {
+	private PrintStream printToFile() throws FileNotFoundException {
 		var outFile = new File("out.txt");
 		PrintStream out = new PrintStream("out.txt");
 		System.setOut(out);
+		return out;
 	}
 }
