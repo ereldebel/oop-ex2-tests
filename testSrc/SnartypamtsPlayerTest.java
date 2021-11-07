@@ -14,13 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class SnartypamtsPlayerTest {
 	/**
-	 * number of games to play times 100.
-	 */
-	public static final int GAMES = 100;
-
-	private File outFile;
-
-	/**
 	 * Checks that the SnartypamtsPlayer beats the CleverPlayer by at least the requested distribution - EPSILON.
 	 * <p>
 	 * It is recommended you temporarily remove the 'final' keyword from SIZE and WIN_STREAK and than
@@ -59,56 +52,8 @@ class SnartypamtsPlayerTest {
 	 * This test relies on probability, so you might fail it once in a few tries even if your code is correct.
 	 */
 	private void checkWinDistribution() {
-		PrintStream stream;
-		try {
-			stream = printToFile();
-		} catch (IOException e) {
-			fail("unable to print to file.");
-			return;
-		}
-		Tournament tournament = new Tournament(
-				GAMES * 100,
-				new VoidRenderer(),
-				new Player[]{new SnartypamtsPlayer(), new CleverPlayer()}
-		);
-		tournament.playTournament();
-		stream.close();
-		var results = getResults();
+		if (CleverPlayerTest.runTournament(PlayerFactoryTest.SNARTYPAMTS, PlayerFactoryTest.CLEVER)) return;
+		var results = CleverPlayerTest.getResults();
 		assert (results[0] > results[1]);
-	}
-
-	private int[] getResults() {
-		var results = new int[3];
-		String lastLine = "";
-		String currentLine;
-		try (BufferedReader br = new BufferedReader(new FileReader("out.txt"))) {
-			while ((currentLine = br.readLine()) != null && !currentLine.equals("")) {
-				lastLine = currentLine;
-			}
-		} catch (IOException e) {
-			fail("unable to read out file.");
-			return results;
-		}
-		lastLine = lastLine.replaceAll("[^0-9]", " ");
-		var resultsAsStrings = lastLine.split("\\s+");
-		if (resultsAsStrings.length > 4) {
-			results[0] = Integer.parseInt(resultsAsStrings[resultsAsStrings.length - 4]);
-			results[1] = Integer.parseInt(resultsAsStrings[resultsAsStrings.length - 2]);
-			results[2] = Integer.parseInt(resultsAsStrings[resultsAsStrings.length - 1]);
-		} else if (resultsAsStrings.length > 2) {
-			for (int i = resultsAsStrings.length - 3; i < resultsAsStrings.length; ++i) {
-				results[i] = Integer.parseInt(resultsAsStrings[i]);
-			}
-		} else {
-			fail("Tournament.playTournament didn't print enough numbers.");
-		}
-		return results;
-	}
-
-	private PrintStream printToFile() throws FileNotFoundException {
-		var outFile = new File("out.txt");
-		PrintStream out = new PrintStream("out.txt");
-		System.setOut(out);
-		return out;
 	}
 }

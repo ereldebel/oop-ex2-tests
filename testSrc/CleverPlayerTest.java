@@ -61,25 +61,17 @@ class CleverPlayerTest {
 	 * This test relies on probability, so you might fail it once in a few tries even if your code is correct.
 	 */
 	private void checkWinDistribution() {
-		PrintStream stream;
-		try {
-			stream = printToFile();
-		} catch (IOException e) {
-			fail("unable to print to file.");
-			return;
-		}
 		int distributionTarget = currentDistributionTarget();
-		Tournament tournament = new Tournament(
-				GAMES * 100,
-				new VoidRenderer(),
-				new Player[]{new CleverPlayer(), new WhateverPlayer()}
-		);
-		tournament.playTournament();
-		stream.close();
+		if (runTournament(PlayerFactoryTest.CLEVER, PlayerFactoryTest.WHATEVER)) return;
 		var results = getResults();
 		assert (results[0] > GAMES * distributionTarget - EPSILON);
 	}
 
+	/**
+	 * Returns the win distribution by the table from Campus IL.
+	 *
+	 * @return expected win distribution by Board.SIZE and Board.WIN_STREAK
+	 */
 	private static int currentDistributionTarget() {
 		int sizeStreakRatio = Board.SIZE - Board.WIN_STREAK;
 		if (sizeStreakRatio < 2) {
@@ -98,12 +90,40 @@ class CleverPlayerTest {
 		return 0;
 	}
 
-	private int[] getResults() {
+	/**
+	 * Runs a single tournament between player 1 and player 2 with the output redirected to out.txt.
+	 * @param player1
+	 * @param player2
+	 * @return
+	 */
+	static public boolean runTournament(String player1, String player2) {
+		PrintStream stream;
+		try {
+			stream = CleverPlayerTest.printToFile();
+		} catch (IOException e) {
+			fail("unable to print to file.");
+			return true;
+		}
+		Tournament.main(new String[]{
+				String.format("%d", GAMES * 100),
+				RendererFactoryTest.NONE,
+				player1,
+				player2
+		});
+		stream.close();
+		return false;
+	}
+
+	/**
+	 * Extracts the results from the output printed to out.txt.
+	 * @return the results in an array as follows: (player 1 wins, player 2 wins, draws).
+	 */
+	public static int[] getResults() {
 		var results = new int[3];
-		String lastLine = "";
-		String currentLine;
+		String currentLine, prevLine = "", lastLine = "";
 		try (BufferedReader br = new BufferedReader(new FileReader("out.txt"))) {
 			while ((currentLine = br.readLine()) != null && !currentLine.equals("")) {
+				prevLine = lastLine;
 				lastLine = currentLine;
 			}
 		} catch (IOException e) {
@@ -112,6 +132,11 @@ class CleverPlayerTest {
 		}
 		lastLine = lastLine.replaceAll("[^0-9]", " ");
 		var resultsAsStrings = lastLine.split("\\s+");
+		if (resultsAsStrings.length < 3) {
+			lastLine = prevLine;
+			lastLine = lastLine.replaceAll("[^0-9]", " ");
+			resultsAsStrings = lastLine.split("\\s+");
+		}
 		if (resultsAsStrings.length > 4) {
 			results[0] = Integer.parseInt(resultsAsStrings[resultsAsStrings.length - 4]);
 			results[1] = Integer.parseInt(resultsAsStrings[resultsAsStrings.length - 2]);
@@ -126,7 +151,12 @@ class CleverPlayerTest {
 		return results;
 	}
 
-	private PrintStream printToFile() throws FileNotFoundException {
+	/**
+	 * Redirects the output from the standard output to out.txt.
+	 * @return the opened output stream to out.txt.
+	 * @throws FileNotFoundException if an error occurred while creating or opening out.txt.
+	 */
+	public static PrintStream printToFile() throws FileNotFoundException {
 		var outFile = new File("out.txt");
 		PrintStream out = new PrintStream("out.txt");
 		System.setOut(out);

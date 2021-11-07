@@ -13,22 +13,22 @@ class PlayerFactoryTest {
 	/**
 	 * string representing a human player.
 	 */
-	private static final String HUMAN = "human";
+	public static final String HUMAN = "human";
 
 	/**
 	 * string representing a random player.
 	 */
-	private static final String WHATEVER = "whatever";
+	public static final String WHATEVER = "whatever";
 
 	/**
 	 * string representing a "clever" player.
 	 */
-	private static final String CLEVER = "clever";
+	public static final String CLEVER = "clever";
 
 	/**
 	 * string representing a "snartypamts" player.
 	 */
-	private static final String SNARTYPAMTS = "snartypamts";
+	public static final String SNARTYPAMTS = "snartypamts";
 
 	private static final String HUMAN_PLAYER = "HumanPlayer";
 	private static final String WHATEVER_PLAYER = "WhateverPlayer";
