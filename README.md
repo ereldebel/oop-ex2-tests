@@ -9,11 +9,7 @@ Written by Erel Debel.
 	
 Pay attention to the documentation. without any change these classes solely test using the current Board.SIZE and Board.WIN_STREAK values. As documented in these classes it is recommended you <B>temporarily</B> remove the _final_ modifiers from these constant and uncomment the test methods in these classes for a full test of the wanted Win/Lose ratio.
 	
-Since the printing in _Tournament.playTournament_ wasn't explicitly defined' the tests assume the printed status is in a single line. it expects the results to be either:
-
- • The last 3 numbers in the string, if the string contains no more than 4 numbers seperated by something. (eg. "13 5 12", "ran 20 rounds. first player got won 12 times, second player won 5 times and there was a draw 13 times.")
-
- • The strings at indexes -4, -2, -1, if the string contains more than 4 numbers seperated by something. (eg. "Player 1: 13, Player 2: 5, Draws: 12)
+The test support the printing in _Tournament.playTournament_ as defined in the forum: "=== player 1: %d | player 2: %d | Draws: %d ===\r"
  
 ========================================================================================
 
