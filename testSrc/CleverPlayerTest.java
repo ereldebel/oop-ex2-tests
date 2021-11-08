@@ -64,7 +64,11 @@ class CleverPlayerTest {
 		int distributionTarget = currentDistributionTarget();
 		if (runTournament(PlayerFactoryTest.CLEVER, PlayerFactoryTest.WHATEVER)) return;
 		var results = getResults();
-		assert (results[0] > GAMES * distributionTarget - EPSILON);
+		assertTrue (results[0] >= results[1], "Player 1 does not win most of the time.");
+		if (results[0] > results[1])
+			assertTrue (results[0] > GAMES * distributionTarget - EPSILON,
+					"Player 1 wins most of the time which is enough but the win distribution is not " +
+							"as requested in campus IL, I belive you can accomplish it :)");
 	}
 
 	/**
@@ -157,7 +161,7 @@ class CleverPlayerTest {
 	 * @throws FileNotFoundException if an error occurred while creating or opening out.txt.
 	 */
 	public static PrintStream printToFile() throws FileNotFoundException {
-		var outFile = new File("out.txt");
+		new File("out.txt");
 		PrintStream out = new PrintStream("out.txt");
 		System.setOut(out);
 		return out;
