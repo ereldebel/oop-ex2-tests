@@ -65,7 +65,7 @@ class CleverPlayerTest {
 		if (runTournament(PlayerFactoryTest.CLEVER, PlayerFactoryTest.WHATEVER)) return;
 		var results = getResults();
 		assertTrue (results[0] >= results[1], "Player 1 does not win most of the time.");
-		if (results[0] > results[1])
+		if (results[0] >= results[1])
 			assertTrue (results[0] > GAMES * distributionTarget - EPSILON,
 					"Player 1 wins most of the time which is enough but the win distribution is not " +
 							"as requested in campus IL, I belive you can accomplish it :)");
