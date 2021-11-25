@@ -3,7 +3,7 @@ featured in Exercise 2 of the new "Introduction to OOP" course,
 HUJI, Winter 2021-2022 Semester. \
 Written by Erel Debel.
 
-<B>Insturctions at the bottom ↓</B>
+<B>↓↓ Instructions at the bottom ↓↓</B>
 
 <B>Important info about CleverPlayerTest and SnartypamtsPlayerTest:</B>
 	
